@@ -54,6 +54,11 @@ function tooltipContent(ys) {
           value: currentItem.close && numberFormat(currentItem.close)
         },
         {
+          label: "Adj close",
+          value:
+            currentItem["Adj Close"] && numberFormat(currentItem["Adj Close"])
+        },
+        {
           label: "upper",
           value: currentItem.upper && numberFormat(currentItem.upper)
         },
@@ -161,7 +166,7 @@ class CandleStickChartWithHoverTooltip extends React.Component {
           <YAxis axisAt="right" orient="right" ticks={5} />
 
           <AreaSeries
-            yAccessor={(d) => d.close}
+            yAccessor={(d) => d["Adj Close"]}
             fill="url(#MyGradient)"
             strokeWidth={2}
             interpolation={curveMonotoneX}

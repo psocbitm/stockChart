@@ -12,11 +12,12 @@ function App() {
   const fetchData = async () => {
     setHistoricalDataLoaded(false);
     const response = await fetch(
-      "https://stormy-hamlet-70329.herokuapp.com/stockreal/JPM/30"
+      "https://stormy-hamlet-70329.herokuapp.com/stockreal/WFC/365"
     );
     const jsonData = await response.json();
     jsonData.map((d) => {
       d.date = new Date(Date.parse(d.date));
+      d["Adj Close"] = +d["Adj Close"];
       d.open = +d.Open;
       d.high = +d.High;
       d.low = +d.Low;
@@ -26,19 +27,19 @@ function App() {
       return d;
     });
 
-    setHistoricalData(jsonData);
+    setHistoricalData(jsonData.slice(jsonData.length - 30, jsonData.length));
     setHistoricalDataLoaded(true);
   };
 
   const fetchSarimaData = async () => {
     setPredictedDataLoaded(false);
     const response = await fetch(
-      "https://internstonksapi.herokuapp.com/api/getthirtydaysarima/JPM"
+      "https://internstonksapi.herokuapp.com/api/getthirtydaysarima/WFC"
     );
 
     const jsonData = await response.json();
     jsonData.data.map((d, index) => {
-      d.date = new Date(new Date().setDate(new Date().getDate() + index + 1));
+      d.date = new Date(new Date().setDate(new Date().getDate() + index));
     });
     console.log(jsonData);
 
